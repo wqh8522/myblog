@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  #数据库配置
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF8&&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  #解决请求乱码问题
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  #jpa配置
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+#配置日志
+logging:
+  config: classpath:Logback.xml
+#SpringSecurity
+security:
+  basic:
+    enabled: false
