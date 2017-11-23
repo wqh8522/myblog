@@ -1,8 +1,13 @@
 package com.wqh.blog.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.wqh.blog.domain.BaseEntity;
+import com.wqh.blog.domain.Page;
+import com.wqh.blog.exception.BusinessException;
+import com.wqh.blog.mapper.BaseMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -10,39 +15,134 @@ import java.util.List;
  * @Date 2017/10/19 17:25
  * @Description: 公用的service接口
  */
-public interface BaseService<T> {
+public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity> {
+
 
     /**
-     * 保存和更新对象
+     * 持久层对象
+     */
+    @Autowired
+    protected M mapper;
+
+    /**
+     * 获取单条数据
+     * @param id
+     * @return
+     */
+    public T get(String id) {
+        return mapper.get(id);
+    }
+
+    /**
+     * 获取单条数据
      * @param entity
      * @return
      */
-    T save(T entity);
+    public T get(T entity) {
+        return mapper.get(entity);
+    }
 
     /**
-     * 查询所有
+     * 查询列表数据
+     * @param entity
      * @return
      */
-    List<T> findAll();
+    public List<T> findList(T entity) {
+        return mapper.findList(entity);
+    }
 
     /**
-     * 根据id查询
-     * @param val
+     * 查询分页数据
+     * @param page 分页对象
+     * @param entity
      * @return
      */
-    T findOne(String val);
+    public Page<T> findPage(Page<T> page, T entity) {
+        entity.setPage(page);
+        page.setRecords(mapper.findList(entity));
+        return page;
+    }
 
     /**
-     * 分页查询所有
-     * @param var1
+     * 保存数据
+     * @param entity
+     */
+    @Transactional(rollbackFor = BusinessException.class)
+    public void save(T entity) {
+        mapper.insert(entity);
+    }
+
+    /**
+     * 更新数据
+     * @param entity
+     */
+    @Transactional(rollbackFor = BusinessException.class)
+    public void update(T entity) {
+        mapper.update(entity);
+    }
+    /**
+     * 删除数据
+     * @param entity
+     */
+    @Transactional(readOnly = false,rollbackFor = BusinessException.class)
+    public void delete(T entity) {
+        mapper.delete(entity);
+    }
+
+
+    /**
+     * 删除全部数据
+     * @param entitys
+     */
+    @Transactional(rollbackFor = BusinessException.class)
+    public void deleteAll(Collection<T> entitys) {
+        for (T entity : entitys) {
+            mapper.delete(entity);
+        }
+    }
+
+    /**
+     * 删除全部数据
+     * @param entitys
+     */
+    @Transactional(readOnly = false,rollbackFor = BusinessException.class)
+    public void deleteAllByLogic(Collection<T> entitys) {
+        for (T entity : entitys) {
+            mapper.deleteByLogic(entity);
+        }
+    }
+
+
+    /**
+     * 获取单条数据
+     * @param propertyName, value
      * @return
      */
-    Page<T> findAll(Pageable var1);
+    public T findUniqueByProperty(String propertyName, Object value){
+        return mapper.findUniqueByProperty(propertyName, value);
+    }
 
     /**
-     * 根据id删除
-     * @param Id
+     * 动态sql
+     * @param sql
      */
-    void delete(String Id);
 
+    public List<Object> executeSelectSql(String sql){
+        return mapper.execSelectSql(sql);
+    }
+
+    @Transactional(rollbackFor = BusinessException.class)
+    public void executeInsertSql(String sql){
+        mapper.execInsertSql(sql);
+    }
+
+    @Transactional(rollbackFor = BusinessException.class)
+    public void executeUpdateSql(String sql){
+        mapper.execUpdateSql(sql);
+    }
+
+    @Transactional(rollbackFor = BusinessException.class)
+    public void executeDeleteSql(String sql){
+        mapper.execDeleteSql(sql);
+    }
 }

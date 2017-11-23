@@ -1,75 +1,44 @@
 package com.wqh.blog.domain;
 
-import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
+import java.util.Date;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+public class Category {
+    private String id;
 
-/**
- * @author wqh
- * @Date 2017/10/19 11:23
- * @Description: 分类信息
- */
-@Entity
-@Table(name = "t_blog_category", schema = "blog", catalog = "blog")
-//使用lombok包，自动生成get、set方法
-@Data
-public class Category extends BaseEntity{
+    private Date createTime;
 
+    private String description;
 
-    @Id
-    @Column(name = "ID",length = 50)
-    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-    @GeneratedValue(generator = "jpa-uuid")
-    public String id;//主键id
+    private String name;
 
-    @Column(name = "CREATE_TIME")
-    @CreationTimestamp//由数据库自动创建时间
-    public Timestamp createTime;
+    private Date updateTime;
 
-    @Column(name = "UPDATE_TIME")
-    @CreationTimestamp//由数据库自动创建时间
-    public Timestamp updateTime;
+    public Category(String id, Date createTime, String description, String name, Date updateTime) {
+        this.id = id;
+        this.createTime = createTime;
+        this.description = description;
+        this.name = name;
+        this.updateTime = updateTime;
+    }
 
-    @Column(name = "NAME",length = 20)
-    private String name;  //分类名
-
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "DESCRIPTION",length = 100)
-    private String description; // 分类描述
+    public Category() {
+        super();
+    }
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -77,6 +46,22 @@ public class Category extends BaseEntity{
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description == null ? null : description.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

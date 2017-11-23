@@ -1,66 +1,42 @@
 package com.wqh.blog.domain;
 
-import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
-/**
- * @Author wqh
- * @Date 2017/10/19 11:23
- * @Description: 评论实体类
- */
-@Entity
-@Table(name = "t_blog_comment", schema = "blog", catalog = "")
-@Data
-public class Comment extends BaseEntity{
+public class Comment {
+    private String id;
 
-    @Id
-    @Column(name = "ID",length = 50)
-    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-    @GeneratedValue(generator = "jpa-uuid")
-    public String id;//主键id
+    private String content;
 
-    @Column(name = "CREATE_TIME")
-    public Date createTime;
+    private Date createTime;
 
+    private String articleId;
 
-    @NotEmpty(message = "评论内容不能为空")
-    @Column(name = "CONTENT", nullable = false)
-    @Size(max = 255,message = "字数超出范围")
-    private String content;//评论的内容
+    private String userId;
 
+    private String toUserId;
 
-  /*  private String replyId;//回复的评论id*/
+    private String paentCommentId;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAENT_COMMENT_ID")
-    private List<Comment> replys;//回复的列表
+    public Comment(String id, String content, Date createTime, String articleId, String userId, String toUserId, String paentCommentId) {
+        this.id = id;
+        this.content = content;
+        this.createTime = createTime;
+        this.articleId = articleId;
+        this.userId = userId;
+        this.toUserId = toUserId;
+        this.paentCommentId = paentCommentId;
+    }
 
-    @JoinColumn(name = "TO_USER_ID")
-    @OneToOne(fetch = FetchType.LAZY)
-    private User to_user;//回复谁，如果是评论文章，该字段为空
-
-    @NotEmpty(message = "必须传入评论者的id")
-    @OneToOne(cascade = CascadeType.DETACH , fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID",nullable = false)
-    private User author; // 作者
-
-    @NotEmpty(message = "必须传入要评论的文章id")
-    @ManyToOne
-    @JoinColumn(name = "ARTICLE_ID",nullable = false)
-    private Article article; //所评论的文章 多对一关系,当回复评论是，该字段为空
+    public Comment() {
+        super();
+    }
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public String getContent() {
@@ -68,31 +44,7 @@ public class Comment extends BaseEntity{
     }
 
     public void setContent(String content) {
-        this.content = content;
-    }
-/*
-    public String getReplyId() {
-        return replyId;
-    }
-
-    public void setReplyId(String replyId) {
-        this.replyId = replyId;
-    }*/
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public User getTo_user() {
-        return to_user;
-    }
-
-    public void setTo_user(User to_user) {
-        this.to_user = to_user;
+        this.content = content == null ? null : content.trim();
     }
 
     public Date getCreateTime() {
@@ -103,20 +55,35 @@ public class Comment extends BaseEntity{
         this.createTime = createTime;
     }
 
-    public List<Comment> getReplys() {
-        return replys;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setReplys(List<Comment> replys) {
-        this.replys = replys;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId == null ? null : articleId.trim();
     }
 
-
-    public Article getArticle() {
-        return article;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId == null ? null : toUserId.trim();
+    }
+
+    public String getPaentCommentId() {
+        return paentCommentId;
+    }
+
+    public void setPaentCommentId(String paentCommentId) {
+        this.paentCommentId = paentCommentId == null ? null : paentCommentId.trim();
     }
 }

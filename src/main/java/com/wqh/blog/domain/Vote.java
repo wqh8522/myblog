@@ -1,43 +1,33 @@
 package com.wqh.blog.domain;
 
-import org.hibernate.annotations.GenericGenerator;
+import java.util.Date;
 
-import javax.persistence.*;
-import java.sql.Date;
+public class Vote {
+    private String id;
 
-/**
- * @Author wqh
- * @Date 2017/10/19 11:23
- * @Description: 点赞实体类
- */
-@Entity
-@Table(name = "t_blog_vote", schema = "blog")
-public class Vote extends BaseEntity{
-
-    @Id
-    @Column(name = "ID",length = 50)
-    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-    @GeneratedValue(generator = "jpa-uuid")
-    private String id;//主键id
-
-
-    @Column(name = "CREATE_TIME")
     private Date createTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    private String articleId;
 
-    @ManyToOne
-    @JoinColumn(name = "ARTICLE_ID")
-    private Article article;//点赞的文章
+    private String userId;
+
+    public Vote(String id, Date createTime, String articleId, String userId) {
+        this.id = id;
+        this.createTime = createTime;
+        this.articleId = articleId;
+        this.userId = userId;
+    }
+
+    public Vote() {
+        super();
+    }
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
 
     public Date getCreateTime() {
@@ -48,19 +38,19 @@ public class Vote extends BaseEntity{
         this.createTime = createTime;
     }
 
-    public User getUser() {
-        return user;
+    public String getArticleId() {
+        return articleId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setArticleId(String articleId) {
+        this.articleId = articleId == null ? null : articleId.trim();
     }
 
-    public Article getArticle() {
-        return article;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

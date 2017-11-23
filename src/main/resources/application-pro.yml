@@ -1,14 +1,15 @@
-
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
 spring:
-  profiles:
-    active: dev
   #数据库配置
-#  datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF8&&useSSL=false
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF8&&useSSL=false
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
   #解决请求乱码问题
   http:
     encoding:
@@ -33,5 +34,4 @@ logging:
 security:
   basic:
     enabled: false
-page:
-  pageSize: 10
+

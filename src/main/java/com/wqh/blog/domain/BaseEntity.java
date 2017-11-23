@@ -3,10 +3,19 @@ package com.wqh.blog.domain;
 import java.io.Serializable;
 
 /**
- * @author wqh
- * @Date 2017/10/19 14:03
- * @Description: 公共字段的实体类
+ * @author wanqh
+ * @date 2017/11/23 20:50
+ * @description: 基础实体类
  */
-public class BaseEntity implements Serializable {
+public class BaseEntity implements Serializable{
 
+    private Page page;
+
+    public Page getPage() {
+        return page;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
 }
