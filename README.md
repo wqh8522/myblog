@@ -1,2 +1,2 @@
 # myblog
-博客系统
+springBoot+mybatis+mysql,,,博客系统
