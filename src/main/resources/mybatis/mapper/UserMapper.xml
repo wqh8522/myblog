@@ -3,31 +3,31 @@
 <mapper namespace="com.wqh.blog.mapper.UserMapper">
 
     <resultMap id="UserResultMap" type="com.wqh.blog.domain.User" >
-            <id column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-            <result column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="icon" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
-            <result column="role" jdbcType="VARCHAR" javaType="com.wqh.blog.enums.RoleEnum" />
-            <result column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-            <result column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <id column="id" property="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="address" property="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        <result column="description" property="description" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="email" property="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="password" property="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <result column="role" property="role" jdbcType="VARCHAR" javaType="com.wqh.blog.enums.RoleEnum" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        <result column="username" property="username" jdbcType="VARCHAR" javaType="java.lang.String" />
     </resultMap>
 
     <sql id="userColumns">
-        a.id = "id",
-        a.name = "username",
-        a.phone = "phone",
-        a.address = "address",
-        a.createTime = "createTime",
-        a.description = "description",
-        a.email = "email",
-        a.icon = "icon",
-        a.password = "password",
-        a.updateTime = "updateTime",
-        a.role = "role"
+        a.id AS "id",
+        a.username AS "username",
+        a.phone AS "phone",
+        a.address AS "address",
+        a.create_time AS "createTime",
+        a.description AS  "description",
+        a.email AS "email",
+        a.icon AS "icon",
+        a.password AS "password",
+        a.update_time AS "updateTime",
+        a.role AS "role"
     </sql>
 
     <!--根据传入的条件查询-->
@@ -41,6 +41,9 @@
             </if>
             <if test="phone != null and phone != ''">
                 AND a.phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                AND a.email = #{email}
             </if>
             <if test="username != null and username != ''">
                 AND a.username = #{username}

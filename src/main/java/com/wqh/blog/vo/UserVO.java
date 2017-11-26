@@ -1,28 +1,30 @@
-package com.wqh.blog.domain;
+package com.wqh.blog.vo;
 
 import com.wqh.blog.enums.RoleEnum;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+
 /**
- * 用户实体类
- * @author wqh
+ * @author wanqh
+ * @date 2017/11/26 11:12
+ * @description:
  */
-public class User extends BaseEntity{
+public class UserVO {
     /**主键*/
     private String id;
 
     /**用户名，唯一*/
-    @NotNull(message = "用户名不能为空")
+    @NotNull
     private String username;
 
     /**邮箱，唯一*/
-    @Email(message = "邮箱格式不对")
+    @Email
     private String email;
 
     /**密码*/
-    @NotNull(message = "密码不能为空")
+    @NotNull
     private String password;
 
     /**地址*/
@@ -46,24 +48,6 @@ public class User extends BaseEntity{
     /**更新时间*/
     private Date updateTime;
 
-    public User(String id, String address, Date createTime, String description, String email, String icon, String password, String phone, RoleEnum role, Date updateTime, String username) {
-        super();
-        this.id = id;
-        this.address = address;
-        this.createTime = createTime;
-        this.description = description;
-        this.email = email;
-        this.icon = icon;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-        this.updateTime = updateTime;
-        this.username = username;
-    }
-
-    public User() {
-        super();
-    }
 
     public String getId() {
         return id;

@@ -8,23 +8,23 @@ import com.wqh.blog.enums.ResultEnum;
  * @Description: 业务异常
  */
 public class BusinessException extends RuntimeException{
-    private Integer code;
+    private String code;
 
     BusinessException(ResultEnum resultEnum){
         super(resultEnum.getMsg());
         this.code = resultEnum.getCode();
     }
 
-    public BusinessException( Integer code,String message) {
+    public BusinessException( String code,String message) {
         super(message);
         this.code = code;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 }

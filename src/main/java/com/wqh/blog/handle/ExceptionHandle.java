@@ -24,6 +24,7 @@ public class ExceptionHandle {
             return ResultVOUtil.error(businessException.getCode(),businessException.getMessage());
         }else {
             //未知错误
+            e.printStackTrace();
             return  ResultVOUtil.error(ResultEnum.UNKNOWN_ERROR.getCode(),ResultEnum.UNKNOWN_ERROR.getMsg());
         }
 

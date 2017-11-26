@@ -67,7 +67,8 @@ public class ImageUtil {
 
     public static void main(String[] args) throws IOException {
         File file = new File("H:/P70823-130332.jpg");
-        File file1 = reduceImg(file, file,0);
+        File tagFile = new File("H:/123.jpg");
+        File file1 = reduceImg(file, tagFile,50);
         System.out.println(file1.length());
     }
 

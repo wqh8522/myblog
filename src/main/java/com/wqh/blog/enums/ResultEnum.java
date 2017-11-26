@@ -7,24 +7,25 @@ package com.wqh.blog.enums;
  */
 public enum  ResultEnum {
 
-    UNKNOWN_ERROR(0,"未知错误"),
-    PARAM_ERROR(1,"参数不正确"),
+    UNKNOWN_ERROR("0","未知错误"),
+    PARAM_ERROR("403","参数不正确"),
 
-    LOGIN_ERROR(2,"登陆错误，请重新登陆"),
-    UNKNOWN_USER_ERROR(3,"该用户不存在")
+    LOGIN_ERROR("2","登陆错误，请重新登陆"),
+    UNKNOWN_USER_ERROR("400","该用户不存在"),
+    PASSWORD_ERROR("400","密码错误")
 
     ;
     /**状态码*/
-    private Integer code;
+    private String code;
     /**错误信息*/
     private String msg;
 
-    ResultEnum(Integer code, String msg) {
+    ResultEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 

@@ -35,3 +35,7 @@ security:
     enabled: false
 page:
   pageSize: 10
+qiniu:
+  accessKey: b_xRrq4YOu3_qxqzjpmck0NSMhtZpcD5ioVzCo6l
+  secretKey: oLe2ZD6Bvrusy5fruLosSiXWCRMWg-YG9hHbiJJp
+  bucket: wanqhblog

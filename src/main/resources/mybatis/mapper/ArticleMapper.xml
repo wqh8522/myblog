@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wqh.blog.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.wqh.blog.domain.Article" >
+      <id column="id" property="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="comment_count"  jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="del_flag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result column="look_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result column="tag" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    <result column="like_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    <result column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+    <result column="category_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+  </resultMap>
+
+  <sql id="userColumns">
+    a.id AS "id",
+    a.title AS "title",
+    a.content AS "content",
+    a.comment_count AS "commentCount",
+    a.create_time AS "createTime",
+    a.del_flag AS "delFlag",
+    a.look_count AS "lookCount",
+    a.tag AS "tag",
+    a.update_time AS "updateTime".
+    a.like_count AS "likeCount",
+    u.id AS "author.id",
+    u.name AS "author.name",
+    u.icon AS "author.icon",
+    u.description AS "author.description"
+    c.id AS "category.id",
+    c.name AS "category.name"
+  </sql>
+  <sql id="articleJoins">
+    LEFT JOIN t_blog_user u ON a.user_id = u.id
+    LEFT JOIN  t_blog_category c ON a.category_id = c.id
+  </sql>
+  <select id="findList">
+    SELECT
+      <include refid="userColumns"/>
+    FOR t_blog_article
+    <include refid="articleJoins"/>
+
+  </select>
+
+  <insert id="insert" parameterType="com.wqh.blog.domain.Article" >
+    insert into t_blog_article (id, comment_count, create_time,
+      del_flag, look_count, tag,
+      title, update_time, like_count,
+      user_id, category_id, content
+      )
+    values (#{id}, #{commentCount}, #{createTime},
+      #{delFlag}, #{lookCount}, #{tag},
+      #{title,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=INTEGER},
+      #{author.id}, #{categoryId.id}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+</mapper>

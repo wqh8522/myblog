@@ -1,46 +1,51 @@
 package com.wqh.blog.domain;
 
+import com.wqh.blog.util.Constants;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class Article {
+public class Article extends BaseEntity{
+
+    /**主键*/
     private String id;
 
-    private Integer commentCount;
+    /**评论数*/
+    private Integer commentCount = 0;
 
+    /**创建时间*/
     private Date createTime;
 
-    private Integer delFlag;
+    /**是否删除*/
+    private Integer delFlag = Constants.IS_NOT_DEL;
 
-    private Integer lookCount;
+    /**查看数量*/
+    private Integer lookCount = 0;
 
+    /**标签*/
+    @NotNull(message = "标签不能为空")
     private String tag;
 
+    /**标题*/
+    @NotNull(message = "标题不能为空")
     private String title;
 
+    /**更新时间*/
     private Date updateTime;
 
-    private Integer likeCount;
+    /**点赞数*/
+    private Integer likeCount = 0;
 
-    private String userId;
+    /**作者*/
+    private User author;
 
-    private String categoryId;
+    /**分类*/
+    private Category category;
 
+    /**文章内容*/
+    @NotNull(message = "文章内容不能为空")
     private String content;
 
-    public Article(String id, Integer commentCount, Date createTime, Integer delFlag, Integer lookCount, String tag, String title, Date updateTime, Integer likeCount, String userId, String categoryId, String content) {
-        this.id = id;
-        this.commentCount = commentCount;
-        this.createTime = createTime;
-        this.delFlag = delFlag;
-        this.lookCount = lookCount;
-        this.tag = tag;
-        this.title = title;
-        this.updateTime = updateTime;
-        this.likeCount = likeCount;
-        this.userId = userId;
-        this.categoryId = categoryId;
-        this.content = content;
-    }
 
     public Article() {
         super();
@@ -118,20 +123,20 @@ public class Article {
         this.likeCount = likeCount;
     }
 
-    public String getUserId() {
-        return userId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId == null ? null : categoryId.trim();
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getContent() {

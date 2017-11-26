@@ -11,8 +11,8 @@ public  class ResultVOUtil {
 
     public static ResultVo success(Object object){
         ResultVo resultVo = new ResultVo();
-        resultVo.setCode(200);
-        resultVo.setMsg("成功");
+        resultVo.setCode("200");
+        resultVo.setMsg("succ");
         resultVo.setData(object);
         return resultVo;
     }
@@ -21,7 +21,7 @@ public  class ResultVOUtil {
         return ResultVOUtil.success(null);
     }
 
-    public static ResultVo error(Integer code,String msg){
+    public static ResultVo error(String code,String msg){
         return  new ResultVo(code,msg);
     }
 }

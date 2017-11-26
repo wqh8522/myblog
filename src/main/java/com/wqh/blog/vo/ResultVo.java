@@ -9,7 +9,7 @@ public class ResultVo {
 
 
     /**返回状态码*/
-    private Integer code;
+    private String code;
     /**返回的信息*/
     private String msg;
     /**返回的数据*/
@@ -18,16 +18,16 @@ public class ResultVo {
     public ResultVo() {
     }
 
-    public ResultVo(Integer code, String msg) {
+    public ResultVo(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
