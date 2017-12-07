@@ -27,7 +27,7 @@ public interface BaseMapper<T> {
 	 * @param entity
 	 * @return
 	 */
-	public T get(T entity);
+	public T getByEntity(T entity);
 	
 	/**
 	 * 根据实体名称和字段名称和字段值获取唯一记录

@@ -39,7 +39,7 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity>
      * @return
      */
     public T get(T entity) {
-        return mapper.get(entity);
+        return mapper.getByEntity(entity);
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity>
      */
     public Page<T> findPage(Page<T> page, T entity) {
         entity.setPage(page);
-        page.setRecords(mapper.findList(entity));
+        page.setList(mapper.findList(entity));
         return page;
     }
 

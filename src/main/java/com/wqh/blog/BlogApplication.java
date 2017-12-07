@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Bean;
 @MapperScan("com.wqh.blog.mapper")
 public class BlogApplication {
 
+	/**
+	 * 注册jwt拦截器
+	 * @return
+	 */
 	@Bean
 	public FilterRegistrationBean jwtFilter() {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();

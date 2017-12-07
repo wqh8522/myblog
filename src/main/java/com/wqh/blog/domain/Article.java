@@ -5,13 +5,16 @@ import com.wqh.blog.util.Constants;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * @author wqh
+ */
 public class Article extends BaseEntity{
 
     /**主键*/
     private String id;
 
     /**评论数*/
-    private Integer commentCount = 0;
+    private Integer commentCount;
 
     /**创建时间*/
     private Date createTime;
@@ -20,21 +23,14 @@ public class Article extends BaseEntity{
     private Integer delFlag = Constants.IS_NOT_DEL;
 
     /**查看数量*/
-    private Integer lookCount = 0;
+    private Integer lookCount;
 
-    /**标签*/
-    @NotNull(message = "标签不能为空")
-    private String tag;
-
-    /**标题*/
-    @NotNull(message = "标题不能为空")
-    private String title;
 
     /**更新时间*/
     private Date updateTime;
 
     /**点赞数*/
-    private Integer likeCount = 0;
+    private Integer likeCount;
 
     /**作者*/
     private User author;
@@ -42,9 +38,19 @@ public class Article extends BaseEntity{
     /**分类*/
     private Category category;
 
+    /**标题*/
+    @NotNull(message = "标题不能为空")
+    private String title;
+
+
     /**文章内容*/
     @NotNull(message = "文章内容不能为空")
     private String content;
+
+    /**标签*/
+    @NotNull(message = "标签不能为空")
+    private String tag;
+
 
 
     public Article() {
@@ -145,5 +151,9 @@ public class Article extends BaseEntity{
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public void addLookCount(){
+        this.lookCount += 1;
     }
 }

@@ -1,5 +1,7 @@
 package com.wqh.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -9,6 +11,7 @@ import java.io.Serializable;
  */
 public class BaseEntity implements Serializable{
 
+    @JsonIgnore
     private Page page;
 
     public Page getPage() {

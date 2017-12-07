@@ -30,8 +30,17 @@
         a.role AS "role"
     </sql>
 
-    <!--根据传入的条件查询-->
+    <!--根据id查询-->
     <select id="get" resultMap="UserResultMap">
+        SELECT
+        <include refid="userColumns"/>
+        FROM t_blog_user a
+        WHERE a.id = #{id}
+    </select>
+
+
+    <!--根据传入的条件查询-->
+    <select id="getByEntity" resultMap="UserResultMap">
         SELECT
         <include refid="userColumns"/>
         FROM t_blog_user a

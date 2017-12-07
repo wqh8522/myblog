@@ -20,5 +20,15 @@
 		<typeAlias alias="LinkedList" type="java.util.LinkedList" />
 	</typeAliases>
 
+	<!--blob转换-->
+	<typeHandlers>
+		<typeHandler handler="com.wqh.blog.handle.ConvertBlobTypeHandler" javaType="java.lang.String" jdbcType="BLOB"/>
+	</typeHandlers>
+
+	<!-- 插件配置 -->
+	<plugins>
+		<plugin interceptor="com.wqh.blog.handle.PaginationInterceptor" />
+	</plugins>
+
 
 </configuration>

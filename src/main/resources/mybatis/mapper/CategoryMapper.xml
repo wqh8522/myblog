@@ -1,57 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wqh.blog.mapper.CategoryMapper" >
-  <sql id="categoryColumns">
+<mapper namespace="com.wqh.blog.mapper.CategoryMapper">
+    <sql id="categoryColumns">
       a.id AS "id",
       a.create_time AS "createTime",
       a.description AS "description",
       a.name AS "name",
-      a.update_time AS "updateTime"
+      a.update_time AS "updateTime",
+      a.sort AS "sort"
   </sql>
-  <!--根据id查询-->
-  <select id="get" resultType="Category">
-      SELECT 
+    <!--根据id查询-->
+    <select id="get" resultType="Category">
+        SELECT
         <include refid="categoryColumns"/>
-      FROM t_blog_category
-    <where>
-      <if test="id != null and id !='' ">
-          id = #{id}
-      </if>
-    </where>
-  </select>
-  <!--查询所有-->
-  <select id="findList"  resultType="Category" >
-    SELECT
-       <include refid="categoryColumns"/>
-    FROM t_blog_category
-  </select>
-  <!--插入-->
-  <insert id="insert">
-    <selectKey keyProperty="id" resultType="java.lang.String"
-               order="BEFORE">
-      select replace(uuid(),'-','') from dual
-    </selectKey>
-    INSERT  INTO
-    t_blog_category(
-      id,
-      create_time,
-      description,
-      update_time,
-      name
-    )VALUES (
-      #{id},
-      #{createTime},
-      #{description},
-      #{updateTime},
-      #{name}
-    )
-  </insert>
-  <!--更新-->
-  <update id="update">
-    UPDATE t_blog_category SET
-      update_time = #{updateTime},
-      description = #{description},
-      name = #{name}
-    WHERE id = #{id}
-  </update>
+        FROM t_blog_category a
+        WHERE  id = #{id}
+    </select>
+
+    <!--根据条件查询-->
+    <select id="getByEntity" resultType="Category">
+        SELECT
+        <include refid="categoryColumns"/>
+        FROM t_blog_category a
+        <where>
+            <if test="id != null and id != ''">
+                a.id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!--查询列表,根据排序字段升序排-->
+    <select id="findList" resultType="Category">
+        SELECT
+        <include refid="categoryColumns"/>
+        FROM t_blog_category a
+        ORDER BY sort ASC
+    </select>
+    <!--插入-->
+    <insert id="insert">
+        <selectKey keyProperty="id" resultType="java.lang.String"
+                   order="BEFORE">
+            select replace(uuid(),'-','') from dual
+        </selectKey>
+        INSERT INTO
+        t_blog_category(
+        id,
+        create_time,
+        description,
+        update_time,
+        name,
+        sort
+        )VALUES (
+        #{id},
+        #{createTime},
+        #{description},
+        #{updateTime},
+        #{name},
+        #{sort}
+        )
+    </insert>
+    <!--更新-->
+    <update id="update">
+        UPDATE t_blog_category
+        <set>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sort != null and sort != ''">
+                sort = #{sort}
+            </if>
+        </set>
+
+        WHERE id = #{id}
+    </update>
+    <!--删除-->
+    <delete id="delete">
+    DELETE FROM t_blog_category WHERE id = #{id}
+  </delete>
 </mapper>

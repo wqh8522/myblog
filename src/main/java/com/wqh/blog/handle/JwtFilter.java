@@ -9,7 +9,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wqh.blog.enums.ResultEnum;
+import com.wqh.blog.exception.LoginException;
 import com.wqh.blog.util.Constants;
+import com.wqh.blog.util.ResultVOUtil;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.Claims;
@@ -53,7 +56,8 @@ public class JwtFilter extends GenericFilterBean {
 		} else {
 
 			if (authHeader == null || !authHeader.startsWith("bearer;")) {
-				throw new ServletException("Missing or invalid Authorization header");
+//				throw new ServletException("Missing or invalid Authorization header");
+				throw new LoginException(ResultEnum.LOGIN_ERROR);
 			}
 			final String token = authHeader.substring(7);
 
@@ -61,7 +65,8 @@ public class JwtFilter extends GenericFilterBean {
 				final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
 				request.setAttribute(Constants.CLAIMS, claims);
 			} catch (final SignatureException e) {
-				throw new ServletException("Invalid token");
+//				throw new ServletException("Invalid token");
+				throw new LoginException(ResultEnum.LOGIN_ERROR);
 			}
 
 			chain.doFilter(req, res);

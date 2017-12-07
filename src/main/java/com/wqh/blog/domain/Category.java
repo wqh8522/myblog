@@ -1,28 +1,35 @@
 package com.wqh.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 /**
  * @author wqh
+ * 文章分类实体类
  */
+
 public class Category extends BaseEntity{
+    /**主键*/
     private String id;
 
-    private Date createTime;
-
+    /**描述*/
     private String description;
 
+    /**名称*/
     private String name;
 
+    /**创建时间*/
+    @JsonIgnore
+    private Date createTime;
+
+    /**更新时间*/
+    @JsonIgnore
     private Date updateTime;
 
-    public Category(String id, Date createTime, String description, String name, Date updateTime) {
-        this.id = id;
-        this.createTime = createTime;
-        this.description = description;
-        this.name = name;
-        this.updateTime = updateTime;
-    }
+    /**排序*/
+    @JsonIgnore
+    private String sort;
 
     public Category() {
         super();
@@ -66,5 +73,13 @@ public class Category extends BaseEntity{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }

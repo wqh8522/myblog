@@ -1,5 +1,7 @@
 package com.wqh.blog.vo;
 
+import com.wqh.blog.enums.ResultEnum;
+
 /**
  * @author wqh
  * @Date 2017/10/30 21:39
@@ -21,6 +23,11 @@ public class ResultVo {
     public ResultVo(String code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    public ResultVo(ResultEnum resultEnum) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
     }
 
     public String getCode() {

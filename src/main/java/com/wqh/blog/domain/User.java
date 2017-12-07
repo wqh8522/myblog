@@ -1,5 +1,6 @@
 package com.wqh.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wqh.blog.enums.RoleEnum;
 import org.hibernate.validator.constraints.Email;
 
@@ -19,47 +20,41 @@ public class User extends BaseEntity{
 
     /**邮箱，唯一*/
     @Email(message = "邮箱格式不对")
+    @JsonIgnore
     private String email;
 
     /**密码*/
     @NotNull(message = "密码不能为空")
+    @JsonIgnore
     private String password;
 
     /**地址*/
+    @JsonIgnore
     private String address;
 
     /**创建时间*/
+    @JsonIgnore
     private Date createTime;
 
     /**个人描述*/
+    @JsonIgnore
     private String description;
 
     /**头像地址*/
     private String icon;
 
     /**电话号码，唯一*/
+    @JsonIgnore
     private String phone;
 
     /**权限，使用枚举类型*/
+    @JsonIgnore
     private RoleEnum role;
 
     /**更新时间*/
+    @JsonIgnore
     private Date updateTime;
 
-    public User(String id, String address, Date createTime, String description, String email, String icon, String password, String phone, RoleEnum role, Date updateTime, String username) {
-        super();
-        this.id = id;
-        this.address = address;
-        this.createTime = createTime;
-        this.description = description;
-        this.email = email;
-        this.icon = icon;
-        this.password = password;
-        this.phone = phone;
-        this.role = role;
-        this.updateTime = updateTime;
-        this.username = username;
-    }
 
     public User() {
         super();

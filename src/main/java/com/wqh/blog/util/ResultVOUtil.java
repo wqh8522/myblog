@@ -1,5 +1,6 @@
 package com.wqh.blog.util;
 
+import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.vo.ResultVo;
 
 /**
@@ -24,4 +25,9 @@ public  class ResultVOUtil {
     public static ResultVo error(String code,String msg){
         return  new ResultVo(code,msg);
     }
+    public static ResultVo error(ResultEnum resultEnum){
+        return  new ResultVo(resultEnum);
+    }
+
+
 }

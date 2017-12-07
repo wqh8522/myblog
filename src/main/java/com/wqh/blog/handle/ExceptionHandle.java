@@ -2,6 +2,7 @@ package com.wqh.blog.handle;
 
 import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.exception.BusinessException;
+import com.wqh.blog.exception.LoginException;
 import com.wqh.blog.util.ResultVOUtil;
 import com.wqh.blog.vo.ResultVo;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ExceptionHandle {
 
+    /**
+     * 异常处理方法
+     * @param e
+     * @return
+     */
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResultVo handle(Exception e){
