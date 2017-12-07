@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author wanqh
  * @date 2017/11/26 18:11
- * @description:
+ * @description: web工具类
  */
 public class WebUtil {
-
+    /**
+     * 获取request对象
+     * @return
+     */
     public static HttpServletRequest getRequest(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return  request;

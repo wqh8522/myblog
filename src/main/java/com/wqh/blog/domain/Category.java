@@ -2,7 +2,10 @@ package com.wqh.blog.domain;
 
 import java.util.Date;
 
-public class Category {
+/**
+ * @author wqh
+ */
+public class Category extends BaseEntity{
     private String id;
 
     private Date createTime;

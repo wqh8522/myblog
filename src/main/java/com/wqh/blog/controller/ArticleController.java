@@ -1,10 +1,12 @@
 package com.wqh.blog.controller;
 
 import com.wqh.blog.domain.Article;
+import com.wqh.blog.domain.Category;
 import com.wqh.blog.domain.User;
 import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.exception.BusinessException;
 import com.wqh.blog.service.ArticleService;
+import com.wqh.blog.service.CategoryService;
 import com.wqh.blog.service.UserService;
 import com.wqh.blog.util.ResultVOUtil;
 import com.wqh.blog.vo.ResultVo;
@@ -34,6 +36,8 @@ public class ArticleController  {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * 首页文章列表
@@ -56,15 +60,22 @@ public class ArticleController  {
         if (bindingResult.hasErrors()){
             throw new BusinessException(ResultEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
         }
+        //处理作者信息
         User currentUser = userService.getCurrentUser();
         if(currentUser == null || StringUtils.isBlank(currentUser.getId())){
             return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(),"请先登录");
         }
+        article.setAuthor(currentUser);
+        //处理分类信息
         if(StringUtils.isBlank(catrgoryId)){
             return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(),"请选择分类");
         }
-
-
+        Category category = categoryService.get(catrgoryId);
+        if(category == null){
+            return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(),"请选择正确的分类");
+        }
+        article.setCategory(category);
+        articleService.save(article);
         return ResultVOUtil.success();
     }
 

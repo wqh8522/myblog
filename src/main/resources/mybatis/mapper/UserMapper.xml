@@ -37,7 +37,7 @@
         FROM t_blog_user a
         <where>
             <if test="id != null and id != ''">
-                AND a.id = #{id}
+               a.id = #{id}
             </if>
             <if test="phone != null and phone != ''">
                 AND a.phone = #{phone}
@@ -60,6 +60,7 @@
         <where>
         </where>
     </select>
+
     <!--添加用户-->
     <insert id="insert">
         <selectKey keyProperty="id" resultType="java.lang.String"
@@ -94,4 +95,19 @@
             #{username}
           )
     </insert>
+
+
+    <!--物理删除-->
+    <delete id="delete">
+        DELETE FROM t_blog_user
+        WHERE id = #{id}
+    </delete>
+
+    <!--逻辑删除-->
+    <update id="deleteByLogic">
+        UPDATE t_blog_user SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

@@ -112,10 +112,11 @@ public class UserController {
         session.setAttribute("user",loginVO);*/
         //拼装accessToken
 
-        String jwtToken = Jwts.builder().setSubject(query_user.getUsername()).claim("roles", "user").setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+    String jwtToken = Jwts.builder().setSubject(query_user.getUsername()).claim("roles", query_user.getRole().toString())
+            .setIssuedAt(new Date())
+            .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
         return ResultVOUtil.success("bearer;"+jwtToken);
-    }
+}
 
     @RequestMapping("test")
     public ResultVo test(String token){
