@@ -1,14 +1,12 @@
 package com.wqh.blog.controller;
 
+import com.wqh.blog.domain.Audience;
 import com.wqh.blog.domain.User;
 import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.enums.RoleEnum;
 import com.wqh.blog.exception.BusinessException;
 import com.wqh.blog.service.UserService;
-import com.wqh.blog.util.Constants;
-import com.wqh.blog.util.MatcherUtil;
-import com.wqh.blog.util.ResultVOUtil;
-import com.wqh.blog.util.UserUtil;
+import com.wqh.blog.util.*;
 import com.wqh.blog.vo.LoginVO;
 import com.wqh.blog.vo.ResultVo;
 import io.jsonwebtoken.JwtBuilder;
@@ -40,6 +38,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private Audience audience;
     /**
      * 用户注册
      *
@@ -115,9 +115,17 @@ public class UserController {
         session.setAttribute("user",loginVO);*/
         //拼装accessToken
 
-        String jwtToken = Jwts.builder().setSubject(query_user.getUsername()).claim("roles", query_user.getRole().toString())
+       /* String jwtToken = Jwts.builder().setSubject(query_user.getUsername()).claim("roles", query_user.getRole().toString())
                 .setIssuedAt(new Date())
-                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+                .signWith(SignatureAlgorithm.HS256, "secretkey").compact();*/
+       String jwtToken = JwtHelper.createJWT(query_user.getUsername(),
+                                           query_user.getId(),
+                                           query_user.getRole().toString(),
+                                           audience.getClientId(),
+                                           audience.getName(),
+                                           audience.getExpiresSecond()*1000,
+                                           audience.getBase64Secret());
+//        request.getSession().setAttribute("token",jwtToken);
         return ResultVOUtil.success("bearer;" + jwtToken);
     }
 

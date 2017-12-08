@@ -9,10 +9,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wqh.blog.domain.Audience;
 import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.exception.LoginException;
 import com.wqh.blog.util.Constants;
+import com.wqh.blog.util.JwtHelper;
 import com.wqh.blog.util.ResultVOUtil;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.Claims;
@@ -25,6 +32,11 @@ import io.jsonwebtoken.SignatureException;
  */
 public class JwtFilter extends GenericFilterBean {
 
+	@Autowired
+	private Audience audience;
+
+	@Value("${audience.base64Secret}")
+	private String base64Secret;
 	/**
 	 *  Reserved claims（保留），它的含义就像是编程语言的保留字一样，属于JWT标准里面规定的一些claim。JWT标准里面定好的claim有：
 
@@ -56,16 +68,22 @@ public class JwtFilter extends GenericFilterBean {
 		} else {
 
 			if (authHeader == null || !authHeader.startsWith("bearer;")) {
-//				throw new ServletException("Missing or invalid Authorization header");
 				throw new LoginException(ResultEnum.LOGIN_ERROR);
 			}
 			final String token = authHeader.substring(7);
 
 			try {
-				final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
+				if(audience == null){
+					BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+					audience = (Audience) factory.getBean("audience");
+				}
+				final Claims claims = JwtHelper.parseJWT(token,audience.getBase64Secret());
+				if(claims == null){
+					throw new LoginException(ResultEnum.LOGIN_ERROR);
+				}
+//				final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
 				request.setAttribute(Constants.CLAIMS, claims);
-			} catch (final SignatureException e) {
-//				throw new ServletException("Invalid token");
+			} catch (final Exception e) {
 				throw new LoginException(ResultEnum.LOGIN_ERROR);
 			}
 

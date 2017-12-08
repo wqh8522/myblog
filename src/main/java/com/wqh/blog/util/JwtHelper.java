@@ -17,6 +17,12 @@ import java.util.Date;
  */
 public class JwtHelper {
 
+    /**
+     * 解析jwt
+     * @param jsonWebToken
+     * @param base64Security
+     * @return
+     */
     public static Claims parseJWT(String jsonWebToken, String base64Security){
         try
         {
@@ -31,6 +37,17 @@ public class JwtHelper {
         }
     }
 
+    /**
+     * 构建jwt
+     * @param name
+     * @param userId
+     * @param role
+     * @param audience
+     * @param issuer
+     * @param TTLMillis
+     * @param base64Security
+     * @return
+     */
     public static String createJWT(String name, String userId, String role,
                                    String audience, String issuer, long TTLMillis, String base64Security)
     {

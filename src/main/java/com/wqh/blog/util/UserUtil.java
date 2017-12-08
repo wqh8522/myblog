@@ -1,11 +1,15 @@
 package com.wqh.blog.util;
 
 import com.wqh.blog.domain.User;
+import com.wqh.blog.service.UserService;
 import com.wqh.blog.vo.LoginVO;
+import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +19,12 @@ import javax.servlet.http.HttpSession;
  * @description:
  */
 public class UserUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(UserUtil.class);
+
+    @Autowired
+    private static UserService userService;
+
 
     /**
      * 验证用户是否登录

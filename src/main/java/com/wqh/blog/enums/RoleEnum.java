@@ -6,5 +6,6 @@ package com.wqh.blog.enums;
  * @Description: 角色的吗，枚举类型
  */
 public enum RoleEnum {
-    USER,ADMIN
+    USER,ADMIN;
+
 }

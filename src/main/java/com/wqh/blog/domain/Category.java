@@ -2,6 +2,7 @@ package com.wqh.blog.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -14,9 +15,11 @@ public class Category extends BaseEntity{
     private String id;
 
     /**描述*/
+    @NotNull(message = "描述不能为空")
     private String description;
 
     /**名称*/
+    @NotNull(message = "名称不能为空")
     private String name;
 
     /**创建时间*/
@@ -29,6 +32,7 @@ public class Category extends BaseEntity{
 
     /**排序*/
     @JsonIgnore
+    @NotNull(message = "排序不能为空")
     private String sort;
 
     public Category() {

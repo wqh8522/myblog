@@ -2,24 +2,12 @@
 spring:
   profiles:
     active: dev
-  #数据库配置
-#  datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF8&&useSSL=false
-#    username: root
-#    password: 1234
-#    driver-class-name: com.mysql.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
   #解决请求乱码问题
   http:
     encoding:
       force: true
       charset: UTF-8
       enabled: true
-  #jpa配置
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
 #mybatis配置
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
@@ -39,3 +27,9 @@ qiniu:
   accessKey: b_xRrq4YOu3_qxqzjpmck0NSMhtZpcD5ioVzCo6l
   secretKey: oLe2ZD6Bvrusy5fruLosSiXWCRMWg-YG9hHbiJJp
   bucket: wanqhblog
+##jwt配置
+audience:
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
+  name: restapiuser
+  expiresSecond: 172800

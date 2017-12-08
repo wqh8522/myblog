@@ -10,7 +10,7 @@ import com.wqh.blog.enums.ResultEnum;
 public class BusinessException extends RuntimeException{
     private String code;
 
-    BusinessException(ResultEnum resultEnum){
+    public BusinessException(ResultEnum resultEnum){
         super(resultEnum.getMsg());
         this.code = resultEnum.getCode();
     }

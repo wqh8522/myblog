@@ -37,19 +37,19 @@ public class UserService extends BaseService<UserMapper,User> {
         super.update(entity);
     }
 
+
+
     /**
      * 获取当前用户
      * @return
      */
     public User getCurrentUser(){
-        HttpServletRequest request = WebUtil.getRequest();
-        Claims claims = (Claims) request.getAttribute(Constants.CLAIMS);
+        Claims claims = (Claims) WebUtil.getRequest().getAttribute(Constants.CLAIMS);
         User user = new User();
         if(claims != null){
-            String username = claims.getSubject();
-            log.info(username);
-            user.setUsername(username);
-            user = super.get(user);
+            String userid = (String) claims.get("userid");
+            log.info(userid);
+            user = super.get(userid);
         }
         return  user;
     }
