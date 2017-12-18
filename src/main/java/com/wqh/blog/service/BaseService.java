@@ -71,9 +71,8 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity>
      * @param entity
      */
     @Transactional(rollbackFor = BusinessException.class)
-    public T save(T entity) {
+    public void save(T entity) {
         mapper.insert(entity);
-        return entity;
     }
 
     /**

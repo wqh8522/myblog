@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wqh.blog.mapper.CategoryMapper">
+    <!--表示开启基于redis的二级缓存-->
+    <cache type="com.wqh.blog.config.cache.RedisCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="6000000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+
     <sql id="categoryColumns">
       a.id AS "id",
       a.create_time AS "createTime",
@@ -40,7 +48,7 @@
         ORDER BY sort ASC
     </select>
     <!--插入-->
-    <insert id="insert">
+    <insert id="insert" flushCache="true">
         <selectKey keyProperty="id" resultType="java.lang.String"
                    order="BEFORE">
             select replace(uuid(),'-','') from dual
@@ -63,7 +71,7 @@
         )
     </insert>
     <!--更新-->
-    <update id="update">
+    <update id="update" flushCache="true">
         UPDATE t_blog_category
         <set>
             <if test="description != null and description != ''">

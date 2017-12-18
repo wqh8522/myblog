@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wqh.blog.mapper.ArticleMapper">
+
+    <!--表示开启基于redis的二级缓存-->
+    <cache type="com.wqh.blog.config.cache.RedisCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="6000000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+
     <resultMap id="BaseResultMap" type="com.wqh.blog.domain.Article">
         <id column="id" property="id" jdbcType="VARCHAR" javaType="java.lang.String"/>
         <result column="comment_count" jdbcType="INTEGER" javaType="java.lang.Integer"/>
@@ -69,7 +78,7 @@
     </select>
 
     <!--发表文章-->
-    <insert id="insert" parameterType="Article">
+    <insert id="insert" parameterType="Article" flushCache="true">
     insert into t_blog_article (id, comment_count, create_time,
       del_flag, look_count, tag,
       title, update_time, like_count,
@@ -82,7 +91,7 @@
       )
   </insert>
     <!--更新文章-->
-    <update id="update" parameterType="Article">
+    <update id="update" parameterType="Article" flushCache="true">
       UPDATE t_blog_article
         <set>
             <if test="commentCount != null" >
@@ -119,7 +128,7 @@
         WHERE id = #{id}
     </update>
     <!--逻辑删除-->
-    <update id="deleteByLogic">
+    <update id="deleteByLogic" flushCache="true">
         UPDATE t_blog_article SET
 			del_flag = #{delFlag}
 		WHERE id = #{id}

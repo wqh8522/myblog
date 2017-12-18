@@ -19,19 +19,12 @@ import org.springframework.stereotype.Service;
 public class ArticleService extends BaseService<ArticleMapper, Article> {
 
     @Override
-    @CachePut(key = "#p0.id")
-    public Article save(Article entity) {
+    public void save(Article entity) {
         entity.setLookCount(0);
         entity.setLikeCount(0);
         entity.setCommentCount(0);
+        //设置主键
         entity.setId(Constants.getID());
-        entity = super.save(entity);
-        return entity;
-    }
-
-    @Override
-    @Cacheable(key = "#p0")
-    public Article get(String id) {
-        return super.get(id);
+         super.save(entity);
     }
 }

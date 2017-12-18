@@ -25,11 +25,10 @@ public class UserService extends BaseService<UserMapper,User> {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Override
-    public User save(User entity) {
+    public void save(User entity) {
         entity.setCreateTime(new Date());
         entity.setUpdateTime(new Date());
         super.save(entity);
-        return entity;
     }
 
     @Override

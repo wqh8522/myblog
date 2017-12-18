@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wqh.blog.mapper.UserMapper">
 
+    <cache type="com.wqh.blog.config.cache.RedisCache">
+        <property name="eviction" value="LRU" />
+        <property name="flushInterval" value="6000000" />
+        <property name="size" value="1024" />
+        <property name="readOnly" value="false" />
+    </cache>
+
     <resultMap id="UserResultMap" type="com.wqh.blog.domain.User" >
         <id column="id" property="id" jdbcType="VARCHAR" javaType="java.lang.String" />
         <result column="address" property="address" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -71,7 +78,7 @@
     </select>
 
     <!--添加用户-->
-    <insert id="insert">
+    <insert id="insert" flushCache="true">
         <selectKey keyProperty="id" resultType="java.lang.String"
                    order="BEFORE">
             select replace(uuid(),'-','') from dual
@@ -107,13 +114,13 @@
 
 
     <!--物理删除-->
-    <delete id="delete">
+    <delete id="delete" flushCache="true">
         DELETE FROM t_blog_user
         WHERE id = #{id}
     </delete>
 
     <!--逻辑删除-->
-    <update id="deleteByLogic">
+    <update id="deleteByLogic" flushCache="true">
         UPDATE t_blog_user SET
             del_flag = #{DEL_FLAG_DELETE}
         WHERE id = #{id}

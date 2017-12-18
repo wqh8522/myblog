@@ -2,6 +2,7 @@ package com.wqh.blog;
 
 import com.google.common.collect.Lists;
 import com.wqh.blog.handle.JwtFilter;
+import com.wqh.blog.util.SpringContextHolder;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,9 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
+/**
+ * @author wqh
+ */
 @SpringBootApplication
 @MapperScan("com.wqh.blog.mapper")
 @EnableCaching
@@ -30,6 +34,8 @@ public class BlogApplication {
 		registrationBean.addUrlPatterns(urlPatterns.toArray(new String[urlPatterns.size()]));
 		return registrationBean;
 	}
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogApplication.class, args);
