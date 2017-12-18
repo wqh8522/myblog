@@ -5,6 +5,8 @@ import com.wqh.blog.domain.Page;
 import com.wqh.blog.exception.BusinessException;
 import com.wqh.blog.mapper.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -30,7 +32,8 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity>
      * @return
      */
     public T get(String id) {
-        return mapper.get(id);
+        T t = mapper.get(id);
+        return t;
     }
 
     /**
@@ -68,8 +71,9 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseEntity>
      * @param entity
      */
     @Transactional(rollbackFor = BusinessException.class)
-    public void save(T entity) {
+    public T save(T entity) {
         mapper.insert(entity);
+        return entity;
     }
 
     /**

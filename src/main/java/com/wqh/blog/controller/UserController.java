@@ -82,7 +82,7 @@ public class UserController {
      * @return
      */
     @PostMapping("login")
-    public ResultVo login(@RequestParam(value = "usernameOrEmail", required = false) String usernameOrEmail,
+    public ResultVo login(@RequestParam(value = "usernameOrEmail", required = true) String usernameOrEmail,
                           @RequestParam(value = "password", required = true) String password,
                           HttpServletRequest request) {
         Boolean is_email = MatcherUtil.matcherEmail(usernameOrEmail);
@@ -126,7 +126,9 @@ public class UserController {
                                            audience.getExpiresSecond()*1000,
                                            audience.getBase64Secret());
 //        request.getSession().setAttribute("token",jwtToken);
-        return ResultVOUtil.success("bearer;" + jwtToken);
+
+        String result_str = "bearer;" + jwtToken;
+        return ResultVOUtil.success(result_str);
     }
 
 }

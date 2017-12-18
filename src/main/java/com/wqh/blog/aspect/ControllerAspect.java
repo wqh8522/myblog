@@ -48,7 +48,7 @@ public class ControllerAspect {
      */
     @ResponseBody
     @Around("privilege()")
-    public void isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取访问目标方法
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
         Method targetMethod = methodSignature.getMethod();
@@ -57,7 +57,7 @@ public class ControllerAspect {
 
         //如果该方法上没有权限注解，直接调用目标方法
         if(StringUtils.isBlank(methodAccess)){
-            joinPoint.proceed();
+            return joinPoint.proceed();
         }else {
             //获取当前用户的权限
             User currentUser = userService.getCurrentUser();
@@ -66,7 +66,7 @@ public class ControllerAspect {
                 throw new LoginException(ResultEnum.LOGIN_ERROR);
             }
             if(methodAccess.equals(currentUser.getRole().toString())){
-                joinPoint.proceed();
+               return joinPoint.proceed();
             }else {
                 throw new BusinessException(ResultEnum.ROLE_ERROR);
             }

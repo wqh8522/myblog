@@ -17,6 +17,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,8 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 public class ArticleController  {
+
+    private final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     @Autowired
     private ArticleService articleService;
@@ -50,7 +54,7 @@ public class ArticleController  {
     @ApiOperation(value = "首页文章列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNo",value = "页码",required = true,dataType = "String",paramType = "path")
-    })
+})
     @GetMapping("/articles/{pageNo}")
     public ResultVo articleList(@RequestParam("pageNo")String pageNo){
         Page<Article> page = articleService.findPage(new Page<Article>(Integer.parseInt(pageNo), 1), new Article());
@@ -105,6 +109,8 @@ public class ArticleController  {
     @ApiImplicitParam(name = "id",value = "文章id",required = true,dataType = "String")
     @GetMapping("/article/{id}")
     public ResultVo getArticleById(@PathVariable("id") String id){
+
+        logger.info(id);
         Article article = articleService.get(id);
         if(article == null){
             return ResultVOUtil.error(ResultEnum.ARTICLE_IS_DELETE);
@@ -123,7 +129,7 @@ public class ArticleController  {
      */
     @ApiOperation(value = "根据用户名查询用户的文章列表，需要分页")
     @ApiImplicitParam(name = "username",value = "用户名",required = true,dataType = "String",paramType = "path")
-    @GetMapping("/article/{username}")
+    @GetMapping("/articles/{username}")
     public ResultVo getArticleByAuthor(@PathVariable("username") String username){
 
         return ResultVOUtil.success();

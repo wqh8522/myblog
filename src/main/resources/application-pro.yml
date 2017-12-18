@@ -10,28 +10,4 @@ spring:
     password: 1234
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-  #解决请求乱码问题
-  http:
-    encoding:
-      force: true
-      charset: UTF-8
-      enabled: true
-  #jpa配置
-#  jpa:
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#mybatis配置
-mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
-  mapper-locations: classpath:mybatis/mapper/*.xml
-  type-aliases-package: com.wqh.blog.domain
-
-#配置日志
-logging:
-  config: classpath:Logback.xml
-#SpringSecurity
-security:
-  basic:
-    enabled: false
 
