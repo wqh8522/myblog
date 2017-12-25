@@ -30,6 +30,8 @@ public class BlogApplication {
 		registrationBean.setFilter(new JwtFilter());
 		List<String>  urlPatterns = Lists.newArrayList();
 		urlPatterns.add("/article/insert");
+		urlPatterns.add("/article/img");
+		urlPatterns.add("/article/imgBase64");
 		urlPatterns.add("/category/insert");
 		registrationBean.addUrlPatterns(urlPatterns.toArray(new String[urlPatterns.size()]));
 		return registrationBean;

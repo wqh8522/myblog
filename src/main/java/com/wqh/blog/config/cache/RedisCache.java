@@ -27,10 +27,15 @@ public class RedisCache implements Cache {
     private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-    private final String id; // cache instance id
-    private RedisTemplate redisTemplate;
 
-    private static final long EXPIRE_TIME_IN_MINUTES = 30; // redis过期时间
+    //cache instance id
+    private final String id;
+
+    private RedisTemplate redisTemplate;
+    /**
+     *    redis过期时间
+     */
+    private static final long EXPIRE_TIME_IN_MINUTES = 3000000;
 
     public RedisCache(String id) {
         if (id == null) {
@@ -69,7 +74,6 @@ public class RedisCache implements Cache {
         RedisTemplate redisTemplate = getRedisTemplate();
         ValueOperations opsForValue = redisTemplate.opsForValue();
         logger.debug("Get cached query result from redis");
-//            System.out.println("****"+opsForValue.get(key).toString());
         Object o = opsForValue.get(key);
         return o;
     }

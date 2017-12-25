@@ -16,8 +16,10 @@ public enum  ResultEnum {
 
     ARTICLE_IS_DELETE("400","文章可能已经被删除"),
     ROLE_ERROR("500","权限不足"),
-    CATEGORY_IS_EXIT("403","该分类依据存在")
-
+    CATEGORY_IS_EXIT("403","该分类依据存在"),
+    IMG_NOT_EMPTY("403","文件不能为空"),
+    IMG_FORMAT_ERROR("403","图片格式错误"),
+    SAVE_IMG_ERROE("403","保存图片出错")
     ;
     /**状态码*/
     private String code;

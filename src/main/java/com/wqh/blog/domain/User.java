@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 /**
  * 用户实体类
@@ -14,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Serializable{
     /**主键*/
     private String id;
 
@@ -24,6 +25,7 @@ public class User extends BaseEntity{
 
     /**邮箱，唯一*/
     @Email(message = "邮箱格式不对")
+    @NotNull(message = "邮箱不能为空")
     @JsonIgnore
     private String email;
 

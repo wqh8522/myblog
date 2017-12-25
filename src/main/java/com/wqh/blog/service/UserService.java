@@ -24,21 +24,6 @@ public class UserService extends BaseService<UserMapper,User> {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
-    @Override
-    public void save(User entity) {
-        entity.setCreateTime(new Date());
-        entity.setUpdateTime(new Date());
-        super.save(entity);
-    }
-
-    @Override
-    public void update(User entity) {
-        entity.setUpdateTime(new Date());
-        super.update(entity);
-    }
-
-
-
     /**
      * 获取当前用户
      * @return

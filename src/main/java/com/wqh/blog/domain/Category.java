@@ -1,16 +1,18 @@
 package com.wqh.blog.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author wqh
  * 文章分类实体类
  */
-
-public class Category extends BaseEntity{
+@Data
+public class Category extends BaseEntity implements Serializable{
     /**主键*/
     private String id;
 

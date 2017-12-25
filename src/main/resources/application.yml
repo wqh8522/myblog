@@ -21,8 +21,6 @@ logging:
 security:
   basic:
     enabled: false
-page:
-  pageSize: 10
 qiniu:
   accessKey: b_xRrq4YOu3_qxqzjpmck0NSMhtZpcD5ioVzCo6l
   secretKey: oLe2ZD6Bvrusy5fruLosSiXWCRMWg-YG9hHbiJJp
@@ -33,3 +31,6 @@ audience:
   base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
   name: restapiuser
   expiresSecond: 172800
+#文件基础路径
+img:
+  location: F:\blog\file
