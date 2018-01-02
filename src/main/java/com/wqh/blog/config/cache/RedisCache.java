@@ -4,15 +4,10 @@ import com.wqh.blog.util.SpringContextHolder;
 import org.apache.ibatis.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -28,14 +23,13 @@ public class RedisCache implements Cache {
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
-    //cache instance id
     private final String id;
 
     private RedisTemplate redisTemplate;
     /**
      *    redis过期时间
      */
-    private static final long EXPIRE_TIME_IN_MINUTES = 3000000;
+    private static final long EXPIRE_TIME_IN_MINUTES = 5;
 
     public RedisCache(String id) {
         if (id == null) {
@@ -51,7 +45,7 @@ public class RedisCache implements Cache {
 
     /**
      * Put query result to redis
-     *
+     * TimeUnit.HOURS 设置时间的类型：时、分、秒、毫秒
      * @param key
      * @param value
      */
@@ -59,7 +53,7 @@ public class RedisCache implements Cache {
     public void putObject(Object key, Object value) {
         RedisTemplate redisTemplate = getRedisTemplate();
         ValueOperations opsForValue = redisTemplate.opsForValue();
-        opsForValue.set(key, value, EXPIRE_TIME_IN_MINUTES, TimeUnit.MINUTES);
+        opsForValue.set(key, value, EXPIRE_TIME_IN_MINUTES, TimeUnit.HOURS);
         logger.debug("Put query result to redis");
     }
 

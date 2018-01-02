@@ -13,6 +13,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.UUID;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BlogApplicationTests {
@@ -26,7 +28,7 @@ public class BlogApplicationTests {
 	private StringRedisTemplate stringRedisTemplate;
 
 	@Test
-	public void testRedis() throws Exception{
+	public void testRedis1() throws Exception{
 //		stringRedisTemplate.opsForValue().set("name","wqh");
 //		Assert.assertEquals("wqh",stringRedisTemplate.opsForValue().get("name"));
 	}
@@ -51,11 +53,24 @@ public class BlogApplicationTests {
 
 	@Test
 	public void testArticleRedis() throws Exception{
-//		Article article = new Article();
-//		article.setId("1234");
-//		article.setTitle("测试redis");
-//		articleRedisTemplate.opsForValue().set(article.getId(),article);
-//
-//		Assert.assertEquals("测试redis",articleRedisTemplate.opsForValue().get(article.getId()).getTitle());
+		Article article = new Article();
+		article.setId("1234");
+		article.setTitle("测试redis");
+		articleRedisTemplate.opsForValue().set(article.getId(),article);
+
+		Assert.assertEquals("测试redis",articleRedisTemplate.opsForValue().get(article.getId()).getTitle());
 	}
+	@Autowired
+	private RedisTemplate<String, com.wqh.blog.domain.Test> testRedisTemplate;
+
+	@Test
+	public void testRedis() throws Exception{
+		com.wqh.blog.domain.Test test = new com.wqh.blog.domain.Test();
+		test.setId(UUID.randomUUID().toString());
+		test.setName("redis");
+		test.setRemake("hhhhhhhhhhhhhhhhhhhhhhh");
+		testRedisTemplate.opsForValue().set(test.getId(),test);
+		Assert.assertEquals("redis",testRedisTemplate.opsForValue().get(test.getId()).getName());
+	}
+
 }

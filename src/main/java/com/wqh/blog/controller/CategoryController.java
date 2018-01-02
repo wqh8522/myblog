@@ -1,23 +1,30 @@
 package com.wqh.blog.controller;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.wqh.blog.annotation.Permission;
 import com.wqh.blog.domain.Category;
 import com.wqh.blog.enums.ResultEnum;
 import com.wqh.blog.exception.BusinessException;
 import com.wqh.blog.service.CategoryService;
+import com.wqh.blog.util.Base64Utils;
 import com.wqh.blog.util.ResultVOUtil;
 import com.wqh.blog.vo.ResultVo;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -28,9 +35,12 @@ import java.util.List;
 @Controller
 public class CategoryController {
 
+    @Value("${img.location}")
+    private String location;
 
     @Autowired
     private CategoryService categoryService;
+
 
     /**
      * 添加分类，只有admin用户可以访问该方法
@@ -63,4 +73,5 @@ public class CategoryController {
         List<Category> list = categoryService.findList(null);
         return ResultVOUtil.success(list);
     }
+
 }

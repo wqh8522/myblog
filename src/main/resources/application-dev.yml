@@ -3,6 +3,11 @@ server:
   tomcat:
     uri-encoding: UTF-8
 spring:
+  #配置静态路径，多个可用逗号隔开
+  resources:
+    static-locations: file:${img.location}
+  mvc:
+    static-path-pattern: /**
   #数据库配置
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=UTF8&&useSSL=false
@@ -31,5 +36,18 @@ spring:
       min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 5000
-#  cache:
-#    type: redis
+#文件基础路径
+img:
+  location: E:/blog/file
+#======================================
+#    分布式文件存储设置
+#======================================
+fdfs:
+  so-timeout: 1500
+  connect-timeout: 500
+  thumbImage:
+    width: 150
+    height: 150
+  tracker-list:
+    - 192.168.18.129:22122
+  web-server-url: http://192.168.18.128/

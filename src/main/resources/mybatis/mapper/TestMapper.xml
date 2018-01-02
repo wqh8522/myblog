@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wqh.blog.mapper.TestMapper">
+    <sql id="userColumns">
+        a.id AS "id",
+        a.name AS "name",
+        a.remake AS "remake"
+     </sql>
+    <!--根据id查询-->
+    <select id="get" resultType="Test">
+        SELECT
+        <include refid="userColumns"/>
+        FROM test a
+        WHERE a.id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="Test">
+    insert into test (id, name,remake )
+    values (#{id}, #{name}, #{remake} )
+  </insert>
+
+    <update id="update" parameterType="Test">
+        UPDATE test
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="remake != null">
+                remake = #{remake},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

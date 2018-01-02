@@ -2,7 +2,6 @@ package com.wqh.blog;
 
 import com.google.common.collect.Lists;
 import com.wqh.blog.handle.JwtFilter;
-import com.wqh.blog.util.SpringContextHolder;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -30,8 +29,8 @@ public class BlogApplication {
 		registrationBean.setFilter(new JwtFilter());
 		List<String>  urlPatterns = Lists.newArrayList();
 		urlPatterns.add("/article/insert");
-		urlPatterns.add("/article/img");
-		urlPatterns.add("/article/imgBase64");
+		urlPatterns.add("/article/delete/*");
+		urlPatterns.add("/article/img/*");
 		urlPatterns.add("/category/insert");
 		registrationBean.addUrlPatterns(urlPatterns.toArray(new String[urlPatterns.size()]));
 		return registrationBean;

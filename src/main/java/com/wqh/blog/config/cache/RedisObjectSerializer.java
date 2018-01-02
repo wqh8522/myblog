@@ -1,4 +1,4 @@
-package com.wqh.blog.config;
+package com.wqh.blog.config.cache;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.serializer.support.DeserializingConverter;

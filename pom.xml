@@ -40,6 +40,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!--actuator-->
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>-->
         <!--AOP包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -73,15 +78,17 @@
             <artifactId>jjwt</artifactId>
             <version>0.6.0</version>
         </dependency>
-        <!--jpa-->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>-->
-        <!--SpringSecurity-->
+        <!--security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!--读取资源文件配置-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <!--日志处理,由于log4j2比较新，对很多框架的支持可能有限，所以改用LogBack+Slf4j来处理日志-->
@@ -119,6 +126,13 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>[7.2.0, 7.2.99]</version>
         </dependency>
+        <!--FastDFS存储图片 start-->
+        <dependency>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>1.25.4-RELEASE</version>
+        </dependency>
+        <!--FastDFS存储图片 end-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -150,6 +164,13 @@
             <version>2.2.2</version>
         </dependency>
         <!--swagger end-->
+        <!--FastDFS start-->
+        <dependency>
+            <groupId>com.luhuiguo</groupId>
+            <artifactId>fastdfs-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
+        <!--FastDFS end-->
     </dependencies>
 
     <build>

@@ -30,7 +30,6 @@
         a.content AS "content",
         a.comment_count AS "commentCount",
         a.create_time AS "createTime",
-        a.del_flag AS "delFlag",
         a.look_count AS "lookCount",
         a.tag AS "tag",
         a.update_time AS "updateTime",
@@ -56,15 +55,16 @@
         WHERE a.id = #{id}
     </select>
 
-    <!--查询列表，需要添加分页-->
+    <!--查询未删除的列表，需要添加分页-->
     <select id="findList" resultType="Article">
         SELECT
         <include refid="userColumns"/>
         FROM t_blog_article a
         <include refid="articleJoins"/>
         <where>
+            a.del_flag = ${delFlag}
             <if test="author != null">
-                a.user_id = #{author.id}
+              AND  a.user_id = #{author.id}
             </if>
         </where>
         <choose>
