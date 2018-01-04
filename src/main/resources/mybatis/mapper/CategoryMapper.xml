@@ -49,10 +49,10 @@
     </select>
     <!--插入-->
     <insert id="insert" flushCache="true">
-        <selectKey keyProperty="id" resultType="java.lang.String"
+      <!--  <selectKey keyProperty="id" resultType="java.lang.String"
                    order="BEFORE">
             select replace(uuid(),'-','') from dual
-        </selectKey>
+        </selectKey>-->
         INSERT INTO
         t_blog_category(
         id,
