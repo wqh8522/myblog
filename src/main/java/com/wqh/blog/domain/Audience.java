@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author wanqh
  * @date 2017/12/08 12:06
- * @description:
+ * @description: jwt
  */
 @Data
 @ConfigurationProperties(prefix = "audience")

@@ -1,6 +1,16 @@
 package com.wqh.blog.handle;
 
-import java.io.IOException;
+import com.wqh.blog.domain.Audience;
+import com.wqh.blog.enums.ResultEnum;
+import com.wqh.blog.exception.LoginException;
+import com.wqh.blog.util.Constants;
+import com.wqh.blog.util.JwtHelper;
+import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -8,23 +18,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.wqh.blog.domain.Audience;
-import com.wqh.blog.enums.ResultEnum;
-import com.wqh.blog.exception.LoginException;
-import com.wqh.blog.util.Constants;
-import com.wqh.blog.util.JwtHelper;
-import com.wqh.blog.util.ResultVOUtil;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.filter.GenericFilterBean;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+import java.io.IOException;
 
 /**
  * @author wqh
@@ -35,8 +29,6 @@ public class JwtFilter extends GenericFilterBean {
 	@Autowired
 	private Audience audience;
 
-	@Value("${audience.base64Secret}")
-	private String base64Secret;
 	/**
 	 *  Reserved claims（保留），它的含义就像是编程语言的保留字一样，属于JWT标准里面规定的一些claim。JWT标准里面定好的claim有：
 

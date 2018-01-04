@@ -162,11 +162,45 @@ public class ArticleController {
      * @return
      */
     @ApiOperation(value = "根据用户名查询用户的文章列表，需要分页")
-    @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String", paramType = "path")
-    @GetMapping("/{username}/list")
-    public ResultVo getArticleByAuthor(@PathVariable("username") String username) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username",value = "用户名",dataType = "String",paramType = "path",required = true),
+            @ApiImplicitParam(name = "pageSize",value = "页码",dataType = "Integer",paramType = "path",required = true),
+    })
+    @GetMapping("/{username}/list/{pageSize}")
+    public ResultVo getArticleByAuthor(@PathVariable("username") String username,
+                                       @PathVariable("pageSize")Integer pageSize) {
+        User user = new User();
+        user.setUsername(username);
+        User user_is_exit = userService.get(user);
+        if(user_is_exit == null || StringUtils.isBlank(user_is_exit.getId())){
+            return ResultVOUtil.success(ResultEnum.UNKNOWN_USER_ERROR);
+        }
+        Article article = new Article();
+        article.setAuthor(user_is_exit);
+        Page<Article> page = articleService.findPage(new Page<Article>(pageSize, 10), article);
+        return ResultVOUtil.success(page);
+    }
 
-        return ResultVOUtil.success();
+    /**
+     * 查询某分类下的文章列表
+     * @param categoryId
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value = " 查询某分类下的文章列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "categoryId",value = "分类id",dataType = "String",paramType = "path",required = true),
+            @ApiImplicitParam(name = "pageSize",value = "页码",dataType = "Integer",paramType = "path",required = true),
+    })
+    @GetMapping(value = "/a/category/{categoryId}/{pageSize}")
+    public ResultVo getArticlesByCategory(@PathVariable("categoryId") String categoryId,
+                                          @PathVariable("pageSize")Integer pageSize){
+        Article article = new Article();
+        Category category = new Category();
+        category.setId(categoryId);
+        article.setCategory(category);
+        Page<Article> page = articleService.findPage(new Page<Article>(pageSize, 10), article);
+        return ResultVOUtil.success(page);
     }
 
 
